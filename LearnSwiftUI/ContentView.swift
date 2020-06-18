@@ -10,13 +10,19 @@ import SwiftUI
 
 struct ContentView: View {
     
-    let redTarget = Double.random(in: 0..<1)
-    let greenTarget = Double.random(in: 0..<1)
-    let blueTarget = Double.random(in: 0..<1)
+    @State var redTarget = Double.random(in: 0..<1)
+    @State var greenTarget = Double.random(in: 0..<1)
+    @State var blueTarget = Double.random(in: 0..<1)
     @State var redGuess: Double
     @State var greenGuess: Double
     @State var blueGuess: Double
     @State var showAlert = false
+    
+    func newColor(){
+        redTarget = Double.random(in: 0..<1)
+        greenTarget = Double.random(in: 0..<1)
+        blueTarget = Double.random(in: 0..<1)
+    }
     
     func computeScore() -> Int {
         let redDiff = redGuess - redTarget
@@ -55,11 +61,18 @@ struct ContentView: View {
                 Text("Сверить цвета")
                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 00))
                 .alert(isPresented: $showAlert){
-                    Alert(title: Text("Ваш результат"), message: Text("\(computeScore())"))
+                    Alert(title: Text("Ваш результат"), message: Text("Угадали на \(computeScore()) %"))
+            }
+            Button(action: {
+                self.newColor()
+            }){
+                Text("Новый цвет")
+                }.padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 00))
+                
             }
         }
     }
-}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
